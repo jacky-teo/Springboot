@@ -2,6 +2,8 @@ package com.application.model;
 
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+
 @Entity
 @Table(name="Jobs")
 public class Job {
@@ -9,9 +11,9 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String job_title;
-    private String job_description;
-    private String job_responsibility;
-    private String requirements;
+    private String[] job_description;
+    private String[]  job_responsibility;
+    private String[] requirements;
     private String job_type;
     private String location;
     private String working_hours;
@@ -21,7 +23,7 @@ public class Job {
     public Job() {
     }
 
-    public Job(Long id, String job_title, String job_description, String job_responsibility, String requirements, String job_type, String location, String working_hours, String classification, String salary) {
+    public Job(Long id, String job_title, String[] job_description, String[] job_responsibility, String[] requirements, String job_type, String location, String working_hours, String classification, String salary) {
         this.id = id;
         this.job_title = job_title;
         this.job_description = job_description;
@@ -50,27 +52,27 @@ public class Job {
         this.job_title = job_title;
     }
 
-    public String getJob_description() {
+    public String[] getJob_description() {
         return job_description;
     }
 
-    public void setJob_description(String job_description) {
+    public void setJob_description(String[] job_description) {
         this.job_description = job_description;
     }
 
-    public String getJob_responsibility() {
+    public String[] getJob_responsibility() {
         return job_responsibility;
     }
 
-    public void setJob_responsibility(String job_responsibility) {
+    public void setJob_responsibility(String[] job_responsibility) {
         this.job_responsibility = job_responsibility;
     }
 
-    public String getRequirements() {
+    public String[] getRequirements() {
         return requirements;
     }
 
-    public void setRequirements(String requirements) {
+    public void setRequirements(String[] requirements) {
         this.requirements = requirements;
     }
 
@@ -119,9 +121,9 @@ public class Job {
         return "Job{" +
                 "id=" + id +
                 ", job_title='" + job_title + '\'' +
-                ", job_description='" + job_description + '\'' +
-                ", job_responsibility='" + job_responsibility + '\'' +
-                ", requirements='" + requirements + '\'' +
+                ", job_description=" + Arrays.toString(job_description) +
+                ", job_responsibility=" + Arrays.toString(job_responsibility) +
+                ", requirements=" + Arrays.toString(requirements) +
                 ", job_type='" + job_type + '\'' +
                 ", location='" + location + '\'' +
                 ", working_hours='" + working_hours + '\'' +
