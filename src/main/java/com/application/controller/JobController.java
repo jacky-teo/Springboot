@@ -24,7 +24,6 @@ public class JobController {
     private JobService jobService;
 
     @GetMapping(path="/getAllJobs", produces= MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public List<Job> getAllJobs() throws Exception{
             return jobService.getAllJobs();
     }

@@ -4,7 +4,6 @@ import com.application.exception.CreateJobException;
 import com.application.exception.NoJobsListedException;
 import com.application.exception.NoSuchJobException;
 
-import com.application.exception.UpdateJobException;
 import com.application.model.Job;
 import com.application.repo.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,11 +70,13 @@ public class JobService{
         Job jobObj = jobRepo.save(job);
         return jobObj;
     }
-    public Job updateJob(Job newJobData,Long id){
+    public Job updateJob(Job newJobData,Long id) throws IllegalStateException{
         Optional<Job> oldJobData = jobRepo.findById(id);
+
         if (oldJobData.isPresent()){
-            Job updatedJobData =oldJobData.get();
-            if(!Objects.equals(newJobData.getJob_title(),updatedJobData.getJob_title()) & !newJobData.getJob_title().isEmpty()){
+            Job updatedJobData = oldJobData.get();
+
+            if(!Objects.equals(newJobData.getJob_title(),updatedJobData.getJob_title()) & !(newJobData.getJob_title().isEmpty())){
                 updatedJobData.setJob_title(newJobData.getJob_title());
             }
 
@@ -91,29 +92,26 @@ public class JobService{
                 updatedJobData.setRequirements(newJobData.getRequirements());
             }
 
-            if(!Objects.equals(newJobData.getJob_type(),updatedJobData.getJob_type()) & !newJobData.getJob_type().isEmpty()){
+            if(!Objects.equals(newJobData.getJob_type(),updatedJobData.getJob_type()) & !(newJobData.getJob_type().isEmpty())){
                 updatedJobData.setJob_type(newJobData.getJob_type());
             }
 
-            if(!Objects.equals(newJobData.getClassification(),updatedJobData.getClassification()) & !newJobData.getClassification().isEmpty()){
+            if(!Objects.equals(newJobData.getClassification(),updatedJobData.getClassification()) & !(newJobData.getClassification().isEmpty())){
                 updatedJobData.setClassification(newJobData.getClassification());
             }
 
-            if(!Objects.equals(newJobData.getLocation(),updatedJobData.getLocation()) & !newJobData.getLocation().isEmpty()){
+            if(!Objects.equals(newJobData.getLocation(),updatedJobData.getLocation()) & !(newJobData.getLocation().isEmpty())){
                 updatedJobData.setLocation(newJobData.getLocation());
             }
 
-            if(!Objects.equals(newJobData.getSalary(),updatedJobData.getSalary()) & !newJobData.getSalary().isEmpty()){
+            if(!Objects.equals(newJobData.getSalary(),updatedJobData.getSalary()) & !(newJobData.getSalary().isEmpty())){
                 updatedJobData.setSalary(newJobData.getSalary());
             }
 
-            if(!Objects.equals(newJobData.getLocation(),updatedJobData.getLocation()) & !newJobData.getLocation().isEmpty()){
+            if(!Objects.equals(newJobData.getLocation(),updatedJobData.getLocation()) & !(newJobData.getLocation().isEmpty())){
                 updatedJobData.setLocation(newJobData.getLocation());
             }
 
-        }
-        else{
-            throw new UpdateJobException();
         }
         Job jobObj = jobRepo.save(newJobData);
         return jobObj;
@@ -121,7 +119,7 @@ public class JobService{
 
     public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
         file.transferTo(new File("C:\\Project\\application\\Resumes\\"+file.getOriginalFilename()));
-        return file.getOriginalFilename();
+        return "Your file " + file.getOriginalFilename() + " has been uploaded";
     }
 
 
