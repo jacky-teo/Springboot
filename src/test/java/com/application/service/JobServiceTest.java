@@ -1,6 +1,8 @@
 package com.application.service;
 
 import com.application.exception.CreateJobException;
+import com.application.exception.NoJobsListedException;
+import com.application.exception.NoSuchJobException;
 import com.application.model.Job;
 import com.application.repo.JobRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +52,15 @@ class JobServiceTest {
                 "$1000 - $20000");
     }
 
+    @Test
+    void NoJobsListed(){
+        //Given setup precondition
+        given(jopRepo.findAll()).willReturn(List.of());
+        assertThrows(NoJobsListedException.class,()->{
+            jobService.getAllJobs();
+        });
+    }
+
     @Test // Get all jobs currently
     void getAllJobs() {
         String[] secondJobDescription = {"Basic Salary - $1K + Commission", "4 day work week", "Local Allowance"};
@@ -89,6 +100,15 @@ class JobServiceTest {
         //then
         System.out.println((savedJob));
         assertNotNull(savedJob);
+    }
+
+    @Test
+    void NoJobByIdFound(){
+        given(jopRepo.findById(2L)).willReturn(Optional.empty());
+        //When
+        assertThrows(NoSuchJobException.class,()->{
+            jobService.getJobById(2L);
+        });
     }
 
     @Test
