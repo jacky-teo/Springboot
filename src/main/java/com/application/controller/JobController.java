@@ -9,12 +9,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+
 
 @RestController
 public class JobController {
@@ -33,7 +32,10 @@ public class JobController {
     public Job getJobById(@PathVariable Long id) throws Exception{
         return jobService.getJobById(id);
     }
-
+    @PostMapping(path="/uploadFile")
+    public String uploadResume(@RequestParam("file") MultipartFile file) throws IllegalStateException,IOException {
+        return jobService.uploadFile(file);
+    }
     @PostMapping(path="/createJob")
     public Job createJob(@RequestBody @Validated Job job) throws Exception{
         return jobService.createJob(job);
@@ -48,7 +50,6 @@ public class JobController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @DeleteMapping("/deleteJobById/{id}")
     public ResponseEntity<HttpStatus> deleteJobById(@PathVariable Long id){
         return new ResponseEntity<>(HttpStatus.OK);

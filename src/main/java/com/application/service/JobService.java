@@ -3,13 +3,17 @@ package com.application.service;
 import com.application.exception.CreateJobException;
 import com.application.exception.NoJobsListedException;
 import com.application.exception.NoSuchJobException;
+
+import com.application.exception.UpdateJobException;
 import com.application.model.Job;
 import com.application.repo.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.multipart.MultipartFile;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -106,7 +110,19 @@ public class JobService{
             if(!Objects.equals(newJobData.getLocation(),updatedJobData.getLocation()) & !newJobData.getLocation().isEmpty()){
                 updatedJobData.setLocation(newJobData.getLocation());
             }
+
         }
-        return jobRepo.save(newJobData);
+        else{
+            throw new UpdateJobException();
+        }
+        Job jobObj = jobRepo.save(newJobData);
+        return jobObj;
     }
+
+    public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
+        file.transferTo(new File("C:\\Project\\application\\Resumes\\"+file.getOriginalFilename()));
+        return file.getOriginalFilename();
+    }
+
+
 }
