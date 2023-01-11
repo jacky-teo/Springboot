@@ -93,10 +93,8 @@ class JobServiceTest {
     void getJobById() {
         //given
         given(jopRepo.findById(1L)).willReturn(Optional.of(job));
-
         //when
         Job savedJob = jobService.getJobById(job.getId());
-
         //then
         System.out.println((savedJob));
         assertNotNull(savedJob);
