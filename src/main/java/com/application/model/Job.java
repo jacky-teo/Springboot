@@ -12,7 +12,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="Jobs")
+@Table(name="jobs")
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

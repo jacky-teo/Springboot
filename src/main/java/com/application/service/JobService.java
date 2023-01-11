@@ -1,5 +1,6 @@
 package com.application.service;
 
+import com.application.config.AppConfiguration;
 import com.application.exception.CreateJobException;
 import com.application.exception.NoJobsListedException;
 import com.application.exception.NoSuchJobException;
@@ -7,6 +8,7 @@ import com.application.exception.NoSuchJobException;
 import com.application.model.Job;
 import com.application.repo.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,9 @@ import java.util.Optional;
 public class JobService{
     @Autowired // Asking Spring boot to give a new instance of job repo and inject into Job service
     private JobRepo jobRepo;
+
+    @Autowired
+    private AppConfiguration appConfig;
 
     public List<Job> getAllJobs(){
         List<Job> jobList = jobRepo.findAll();
@@ -118,7 +123,7 @@ public class JobService{
     }
 
     public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
-        file.transferTo(new File("C:\\Project\\application\\Resumes\\"+file.getOriginalFilename()));
+        file.transferTo(new File(appConfig.getSaveFileLocation().toString()+file.getOriginalFilename()));
         return "Your file " + file.getOriginalFilename() + " has been uploaded";
     }
 
