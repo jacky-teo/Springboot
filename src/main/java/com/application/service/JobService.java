@@ -123,7 +123,7 @@ public class JobService{
     }
 
     public String uploadFile(MultipartFile file) throws IllegalStateException, IOException {
-        file.transferTo(new File(appConfig.getSaveFileLocation().toString()+file.getOriginalFilename()));
+        file.transferTo(new File(appConfig.getSaveFileLocation()+file.getOriginalFilename()));
         return "Your file " + file.getOriginalFilename() + " has been uploaded";
     }
 
