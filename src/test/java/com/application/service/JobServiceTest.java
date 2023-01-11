@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -130,17 +131,18 @@ class JobServiceTest {
         String[] secondJobDescription = {"Basic Salary - $1K + Commission", "4 day work week", "Local Allowance"};
         String[] secondJobResponsibilities = {"Build value based products","Develop a relationships"};
         String[] secondJobRequirements = {"Possess Diploma","Excellent Spoken and Written Chinese"};
+        Job job2 = Job.builder()
+                .job_title("")
+                .job_type("Product")
+                .job_description(secondJobDescription)
+                .job_responsibility(secondJobResponsibilities)
+                .requirements(secondJobRequirements)
+                .salary("$1000 - $3000")
+                .working_hours("9 Hours")
+                .location("North")
+                .classification("Finance")
+                .build();
 
-        Job job2 = new Job(2L,
-                "",
-                secondJobDescription,
-                secondJobResponsibilities,
-                secondJobRequirements,
-                "Product",
-                "North",
-                "9 Hours",
-                "Finance",
-                "$1000 - $3000");
 
         //
         given(jopRepo.save(job2)).willReturn(job2);
