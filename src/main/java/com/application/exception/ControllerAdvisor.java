@@ -23,8 +23,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         Map<String,Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message","No Jobs Found");
-        body.put("status",HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        body.put("status",HttpStatus.NO_CONTENT.value());
+        return new ResponseEntity<>(body, HttpStatus.NO_CONTENT);
     }
     @ExceptionHandler(NoSuchJobException.class)
     public ResponseEntity<Object> handleNoSuchJobException(NoSuchJobException ex, WebRequest request){
